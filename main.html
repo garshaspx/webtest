@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Telegram Mini App - Init Data</title>
+  <!-- Load Telegram Web App library -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #74ebd5, #ACB6E5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #333;
+    }
+    .container {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      margin: auto;
+    }
+    h1 {
+      margin-top: 0;
+      color: #4A90E2;
+      text-align: center;
+    }
+    .data-block {
+      background-color: #f4f4f4;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 15px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+    .data-block h2 {
+      margin-top: 0;
+      font-size: 1.2em;
+      color: #333;
+    }
+    pre {
+      margin: 0;
+      font-size: 0.9em;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .footer {
+      text-align: center;
+      font-size: 0.9em;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Telegram Mini App Init Data</h1>
+    <div class="data-block">
+      <h2>Raw Init Data</h2>
+      <pre id="rawData">Loading raw init data...</pre>
+    </div>
+    <div class="data-block">
+      <h2>Parsed Init Data</h2>
+      <pre id="parsedData">Loading parsed init data...</pre>
+    </div>
+    <div class="footer">Powered by Telegram Web Apps</div>
+  </div>
+
+  <script>
+    // Notify Telegram that the app is ready
+    Telegram.WebApp.ready();
+
+    window.addEventListener('load', function() {
+      // Reference the elements where we will display the data
+      const rawDataElement = document.getElementById('rawData');
+      const parsedDataElement = document.getElementById('parsedData');
+
+      // Get the raw init data from Telegram
+      const rawInitData = Telegram.WebApp.initData;
+      rawDataElement.textContent = rawInitData ? rawInitData : "No raw init data available.";
+
+      // Get the parsed init data (an object with user and context info)
+      if (Telegram.WebApp.initDataUnsafe) {
+        parsedDataElement.textContent = JSON.stringify(Telegram.WebApp.initDataUnsafe, null, 2);
+      } else {
+        parsedDataElement.textContent = "No parsed init data available.";
+      }
+    });
+  </script>
+</body>
+</html>
